@@ -1,0 +1,8 @@
+/* Accent option: Cobalt. Overrides tokens only, plus 4 rules that move accent-as-text to --accent-text. */
+:root{--accent:#3670FF;--on-accent:#0E0E0E;--accent-text:#6D97FF}
+:focus-visible{outline-color:var(--accent-text)}
+.to-top{text-decoration-color:var(--accent-text)}
+@media (hover:hover) and (pointer:fine){
+  .poster h3 a:hover,.poster h3 a:focus-visible,.vid h3 a:hover{color:var(--accent-text)}
+  .to-top:hover,.to-top:focus-visible{color:var(--accent-text)}
+}

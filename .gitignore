@@ -1,0 +1,7 @@
+source/
+node_modules/
+.lighthouseci/
+*.log
+Thumbs.db
+.DS_Store
+.shots/

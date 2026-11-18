@@ -1,0 +1,267 @@
+/* Pit Board, white accent. Production shell. */
+@font-face{
+  font-family:"Saira";
+  font-style:normal;
+  font-weight:400 600;
+  font-stretch:75% 100%;
+  font-display:swap;
+  src:url(fonts/saira-var-latin.woff2) format("woff2");
+}
+/* Fallback faces tuned to Saira (hhea 1135/-439/0 per 1000 upm). size-adjust = Saira/Arial average advance width over the page's text,
+   measured with fontTools on the instanced font; ascent/descent/line-gap = Saira metric / (upm x size-adjust). */
+@font-face{font-family:"Saira fallback";font-weight:400;font-stretch:100%;src:local("Arial"),local("ArialMT");size-adjust:102.27%;ascent-override:110.98%;descent-override:42.93%;line-gap-override:0%}
+@font-face{font-family:"Saira fallback";font-weight:600;font-stretch:100%;src:local("Arial Bold"),local("Arial-BoldMT");size-adjust:96.14%;ascent-override:118.06%;descent-override:45.66%;line-gap-override:0%}
+/* Condensed fallbacks, one family name per local font so a missing font falls through to the next family. Used only by h1, h2 and .discord (--font-cond).
+   size-adjust values: Arial Narrow Bold measured; the others are estimates (Helvetica Neue Condensed Bold 84%, Roboto Condensed Bold 79%, Arial Bold 67.6%), untested on macOS, iOS and Android.
+   ascent = 113.5% / size-adjust, descent = 43.9% / size-adjust. */
+@font-face{font-family:"Saira fb narrow";font-weight:600;font-stretch:75%;src:local("Arial Narrow Bold"),local("ArialNarrow-Bold");size-adjust:82.48%;ascent-override:137.61%;descent-override:53.22%;line-gap-override:0%}
+@font-face{font-family:"Saira fb helv";font-weight:600;font-stretch:75%;src:local("Helvetica Neue Condensed Bold"),local("HelveticaNeue-CondensedBold");size-adjust:84%;ascent-override:135.12%;descent-override:52.26%;line-gap-override:0%}
+@font-face{font-family:"Saira fb roboto";font-weight:600;font-stretch:75%;src:local("Roboto Condensed Bold"),local("RobotoCondensed-Bold"),local("Roboto Condensed");size-adjust:79%;ascent-override:143.67%;descent-override:55.57%;line-gap-override:0%}
+@font-face{font-family:"Saira fb arial";font-weight:600;font-stretch:75%;src:local("Arial Bold"),local("Arial-BoldMT");size-adjust:67.6%;ascent-override:167.90%;descent-override:64.94%;line-gap-override:0%}
+:root{
+  --bg:#0E0E0E;
+  --surface:#191919;
+  --text:#EEEEEE;
+  --muted:#A0A0A0;
+  --accent:#FFFFFF;
+  --on-accent:#0E0E0E;
+  /* link underline: colour never marks a link, the underline does */
+  --ul-t:2px;--ul-t-hover:4px;--ul-o:0.25em;
+  /* inverted block used for hover, focus and active */
+  --inv-bg:var(--accent);--inv-fg:var(--on-accent);
+  --s-1:4px;--s-2:8px;--s-3:12px;--s-4:16px;--s-5:24px;--s-6:32px;--s-7:48px;--s-8:64px;--s-9:96px;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+  --font:"Saira","Saira fallback",Arial,sans-serif;
+  --font-cond:"Saira","Saira fb narrow","Saira fb helv","Saira fb roboto","Saira fb arial","Saira fallback",Arial,sans-serif;
+  --cols:4;--gut:12px;--margin:16px;--max:1440px;
+  --sec-gap:var(--s-8);
+  --play:56px;
+}
+@media (min-width:768px){:root{--cols:8;--gut:16px;--margin:24px;--play:64px}}
+@media (min-width:1024px){:root{--cols:12;--margin:32px;--sec-gap:var(--s-9)}}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:1rem;font-weight:400;font-stretch:100%;line-height:1.55;letter-spacing:0.01em;overflow-wrap:break-word}
+svg{display:block}
+img,video{display:block;max-width:100%}
+h1,h2,h3,p,dl,dd,ul{margin:0}
+ul{padding:0;list-style:none}
+h1,h2,h3{text-wrap:balance}
+p,dd{text-wrap:pretty}
+p{max-width:65ch}
+button{font:inherit;color:inherit}
+::selection{background:var(--accent);color:var(--on-accent)}
+.on-accent ::selection{background:var(--on-accent);color:var(--accent)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+h1,h2,.discord{font-family:var(--font-cond)}
+h1{font-size:clamp(2.75rem,1.6rem + 4.6vw,5.5rem);font-weight:600;font-stretch:75%;text-transform:uppercase;letter-spacing:-0.01em;line-height:0.95}
+h2{font-size:clamp(1.75rem,1.4rem + 1.5vw,2.5rem);font-weight:600;font-stretch:75%;text-transform:uppercase;letter-spacing:0;line-height:1}
+h3,.name{font-size:1.25rem;font-weight:600;font-stretch:100%;letter-spacing:0;line-height:1.25}
+.about{font-size:1.25rem;font-weight:400;letter-spacing:0;line-height:1.45}
+.about{max-width:50ch}
+.label,dt,nav a,.play-text{font-size:0.75rem;font-weight:500;font-stretch:100%;text-transform:uppercase;letter-spacing:0.08em;line-height:1.4}
+.muted{color:var(--muted)}
+
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--margin)}
+.grid{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));column-gap:var(--gut)}
+.on-accent{background:var(--accent);color:var(--on-accent);--inv-bg:var(--on-accent);--inv-fg:var(--accent)}
+
+/* links: persistent underline on every text link, on dark and on white. Image links (.art-link) have no underline and use the ring below. */
+a:not(.art-link){color:inherit;text-decoration-line:underline;text-decoration-thickness:var(--ul-t);text-decoration-color:currentColor;text-underline-offset:var(--ul-o);transition:background-color 120ms var(--ease),color 120ms var(--ease)}
+/* focus: thicker underline plus inverted block plus outline (the active state is defined at the end of the file) */
+a:not(.art-link):focus-visible{background-color:var(--inv-bg);color:var(--inv-fg);text-decoration-thickness:var(--ul-t-hover)}
+.art-link{display:block;color:inherit;text-decoration:none}
+
+/* focus ring: white on dark, near-black on white blocks */
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.on-accent :focus-visible,.fields :focus-visible{outline-color:var(--on-accent)}
+
+/* two-tone inner ring for artwork links and video frames: 3px white edge plus 3px near-black band, drawn inside the clipping box.
+   One band is always at least 4.39:1 against any pixel, and the two bands are 19.3:1 against each other. */
+.art-link:focus-visible,.facade:focus-visible,.media>video:focus-visible{outline:none}
+.art-link:focus-visible::after,.art-link:active::after,.media:has(:focus-visible)::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;border:3px solid var(--accent);outline:3px solid var(--on-accent);outline-offset:-6px}
+.art-link{position:relative}
+/* on white sections: outer near-black outline (19.3:1 against white), 3px gap, no inner ring */
+.on-accent .art-link:focus-visible{outline:3px solid var(--on-accent);outline-offset:3px}
+.on-accent .art-link:focus-visible::after{content:none}
+/* visible text cue inside every artwork link */
+.view-label{display:block;position:relative;z-index:1;margin-top:var(--s-2);font-size:0.75rem;font-weight:500;letter-spacing:0.01em;line-height:1.4;text-decoration-line:underline;text-decoration-thickness:var(--ul-t);text-underline-offset:var(--ul-o)}
+.poster .view-label{background:var(--bg);padding-top:var(--s-2);margin-top:0}
+.op-play{--play:40px;z-index:1}
+.op-play svg{width:20px;height:20px}
+.op-vid .art{position:relative}
+/* the logo frame must not clip the outer focus outline */
+.logo .frame{overflow:visible}
+
+/* skip link */
+.skip{background:var(--accent);color:var(--on-accent);padding:var(--s-3) var(--s-4);min-height:44px;display:inline-flex;align-items:center}
+.skip:not(:focus){position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);padding:0;min-height:0}
+.skip:focus{position:absolute;left:var(--s-2);top:var(--s-2);z-index:10;outline-color:var(--on-accent);outline-offset:-6px}
+
+/* header */
+.site-header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.name{display:inline-flex;align-items:center;min-height:44px;padding-inline:var(--s-2);margin-inline:calc(-1*var(--s-2))}
+.site-header nav ul{display:flex;flex-wrap:wrap;column-gap:var(--s-3)}
+nav a{display:inline-flex;align-items:center;min-height:44px;padding-inline:var(--s-2)}
+@media (min-width:768px){.site-header .wrap{min-height:64px}.site-header nav ul{column-gap:var(--s-5)}}
+
+/* opening: role line, one video frame and one poster, all on the grid */
+.opening{padding-block:var(--s-6)}
+.opening .grid{row-gap:var(--s-5)}
+.op-text,.op-vid{grid-column:1/-1}
+.op-poster{grid-column:1/4}
+.op-text .about{margin-top:var(--s-4)}
+.h1-role{display:block}
+.mount{background:var(--bg);padding:var(--s-2)}
+.mount .art{overflow:hidden}
+@media (min-width:768px){
+  .op-text{grid-row:1}
+  .op-vid{grid-column:1/6;grid-row:2}
+  .op-poster{grid-column:6/9;grid-row:2}
+}
+@media (min-width:1024px){
+  .opening{padding-block:var(--s-7) var(--s-6)}
+  .op-vid{grid-column:1/9}
+  .op-poster{grid-column:9/13}
+}
+
+/* sections */
+.sec{margin-top:var(--sec-gap)}
+.bar{padding-block:var(--s-4);margin-bottom:var(--s-7)}
+
+/* images */
+.art{width:100%;background:var(--surface)}
+.art img{width:100%;height:auto}
+.title-block{margin-bottom:var(--s-3)}
+.piece{position:relative}
+.frame{position:relative;overflow:hidden}
+
+/* fields: default state shows everything */
+.fields{display:grid;gap:var(--s-4);background:var(--accent);color:var(--on-accent);padding:var(--s-5)}
+.fields div{display:block}
+.fields dd{margin-top:var(--s-1)}
+.logo .fields{background:transparent;padding:0;margin-top:var(--s-4)}
+
+/* posters */
+.posters-grid{align-items:start;row-gap:var(--s-8)}
+.p-1,.p-2{grid-column:1/-1}
+/* Client and Tools only: compact padding, two columns when they fit, so the hover panel is about as tall as two caption lines */
+.poster .fields{grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:var(--s-3) var(--s-5);padding:var(--s-4)}
+@media (min-width:768px){
+  .p-1{grid-column:1/5}
+  .p-2{grid-column:5/9}
+}
+@media (min-width:1024px){
+  .p-1{grid-column:1/6}
+  .p-2{grid-column:7/13}
+}
+
+/* logos: one Edmonson tile beside three Eztec tiles on a 4-tile grid; on mobile the Edmonson tile is two Eztec tiles wide */
+.logos{padding-block:var(--s-7)}
+.logos h2{margin-bottom:var(--s-7)}
+.logos-list{display:flex;flex-direction:column;row-gap:var(--s-8)}
+.set{display:grid;gap:var(--s-3)}
+.set-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.set-1{grid-template-columns:minmax(0,1fr);width:calc((100% - 2*var(--s-3))/3*2 + var(--s-3))}
+.logo .art{overflow:hidden}
+/* Edmonson: white plate inset in a near-black tile, so the plate has a visible edge and the tile matches the Eztec tiles */
+.l-edm .art{background:var(--on-accent);padding:var(--s-3)}
+.logo .fields{grid-template-columns:1fr}
+@media (min-width:768px){
+  .logos{padding-block:var(--s-8)}
+  .logos-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--s-4);align-items:start}
+  .l-edm{grid-column:1/2}
+  .l-ezt{grid-column:2/5}
+  .set{gap:var(--s-4)}
+  .set-1{width:100%}
+  .l-ezt .fields{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--s-4)}
+}
+
+/* video */
+.video-body{display:flex;flex-direction:column;row-gap:var(--s-8)}
+.vid{display:grid;grid-template-columns:minmax(0,1fr);align-items:start}
+.vid .title-block{grid-column:1/-1}
+.vid-row{display:flex;flex-direction:column;row-gap:var(--s-8)}
+.media{position:relative;overflow:hidden;background:var(--surface)}
+.r-169{aspect-ratio:16/9}
+.r-43{aspect-ratio:4/3}
+.media>video,.media noscript video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:var(--bg)}
+.facade{position:relative;overflow:hidden;display:block;width:100%;height:100%;padding:0;border:0;background:transparent;cursor:pointer;text-align:left}
+.facade picture,.facade img{width:100%;height:100%}
+.facade img{object-fit:contain}
+.facade video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;pointer-events:none;background:var(--surface)}
+.media.is-previewing .facade video{opacity:1}
+.play-bar{position:absolute;left:0;bottom:0;width:100%;height:var(--play);background:var(--accent)}
+.play-key{position:absolute;left:0;bottom:0;width:var(--play);height:var(--play);display:grid;place-items:center;background:var(--accent);color:var(--on-accent)}
+.play-key svg{width:24px;height:24px;fill:currentColor}
+.play-text{position:absolute;left:calc(var(--play) + var(--s-4));right:var(--s-4);bottom:0;height:var(--play);display:flex;align-items:center;color:var(--on-accent)}
+.facade:active .play-bar,.facade:active .play-key{background-color:var(--on-accent)}
+.facade:active .play-text{color:var(--accent)}
+.facade:active .play-key{color:var(--accent)}
+.vid .fields{margin-top:var(--s-3);grid-template-columns:1fr}
+@media (min-width:768px){
+  .vid-split .fields,.vid-a .fields{grid-template-columns:repeat(auto-fit,minmax(9rem,1fr))}
+}
+@media (min-width:1024px){
+  .vid-split{grid-template-columns:repeat(var(--cols),minmax(0,1fr));column-gap:var(--gut)}
+  .vid-split .media{grid-column:1/9;grid-row:2}
+  .vid-split .fields{grid-column:9/13;grid-row:2;margin-top:0;align-self:start;grid-template-columns:1fr}
+  /* V2 and V3 share three rows (title, media, fields): top edges align and both caption panels start on one line below the taller frame */
+  .vid-row{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));grid-template-rows:auto auto auto;column-gap:var(--gut);row-gap:0;align-items:start}
+  .vid-a,.vid-b{grid-row:1/4;grid-template-rows:subgrid;row-gap:0}
+  .vid-a{grid-column:1/8}
+  .vid-b{grid-column:8/13}
+  .vid-b .fields{grid-template-columns:1fr}
+}
+
+/* contact */
+.contact{padding-block:var(--s-8)}
+.contact-about,.contact-links{grid-column:1/-1}
+.contact-links{margin-top:var(--s-6)}
+.discord{font-size:clamp(1.75rem,1.4rem + 1.5vw,2.5rem);font-weight:600;font-stretch:75%;letter-spacing:0;line-height:1.1;overflow-wrap:anywhere}
+.copy-row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-4);margin-top:var(--s-4)}
+.copy{min-height:44px;padding:var(--s-2) var(--s-4);background:transparent;color:var(--on-accent);border:2px solid var(--on-accent);border-radius:0;font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer}
+.copy[hidden]{display:none}
+.copy:active,.copy:focus-visible{background:var(--on-accent);color:var(--accent)}
+.copy-status:empty{display:none}
+@media (min-width:1024px){
+  .contact{padding-block:var(--s-9)}
+  .contact-about{grid-column:1/7}
+  .contact-links{grid-column:8/13;margin-top:0;align-self:end}
+}
+
+/* footer */
+.site-footer{padding-block:var(--s-6)}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:var(--s-4)}
+.to-top{display:inline-flex;align-items:center;min-height:44px;padding-inline:var(--s-2);margin-inline:calc(-1*var(--s-2))}
+
+/* hover-capable pointers: fields and play bar appear on hover or focus; everything else shows them by default */
+@media (hover:hover) and (pointer:fine){
+  .poster .fields{position:absolute;left:0;right:0;bottom:0;z-index:2;max-height:100%;overflow-y:auto;transform:translateY(calc(100% + 2px));transition:transform 160ms var(--ease)}
+  .poster:hover .fields,.poster:focus-within .fields,.poster .fields:focus-within{transform:translateY(0);transition-duration:240ms}
+  .poster .art{transition:transform 200ms var(--ease)}
+  .poster:hover .art,.poster:focus-within .art{transform:scale(1.04);transition-duration:300ms}
+  .logo .art img{transition:transform 160ms var(--ease)}
+  .logo:hover .art img,.logo:focus-within .art img{transform:scale(1.06);transition-duration:240ms}
+  .l-edm:hover .art img,.l-edm:focus-within .art img{transform:scale(1.03)}
+
+  .mount .art img{transition:transform 160ms var(--ease)}
+  .op-link:hover .art img{transform:scale(1.03);transition-duration:240ms}
+  a:not(.art-link):hover{background-color:var(--inv-bg);color:var(--inv-fg);text-decoration-thickness:var(--ul-t-hover)}
+  .copy:hover{background:var(--on-accent);color:var(--accent)}
+
+  .play-bar{transform:scaleX(0);transform-origin:left;transition:transform 180ms var(--ease)}
+  .facade:hover .play-bar,.facade:focus-visible .play-bar{transform:scaleX(1);transition-duration:260ms}
+  .play-text{opacity:0;transition:opacity 120ms var(--ease)}
+  .facade:hover .play-text,.facade:focus-visible .play-text{opacity:1;transition:opacity 150ms var(--ease) 100ms}
+  .media.is-previewing .facade video{transition:opacity 120ms var(--ease)}
+}
+/* active (pressed): distinct from hover. Text links drop back to the thin underline and gain an inner outline; copy gains an inner ring; artwork shows the ring. */
+a:not(.art-link):active{background-color:var(--inv-bg);color:var(--inv-fg);text-decoration-thickness:var(--ul-t);outline:2px solid currentColor;outline-offset:-4px}
+.on-accent .copy:active{background:var(--on-accent);color:var(--accent);outline:2px solid var(--accent);outline-offset:-6px}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+  .art,.art img{transform:none!important}
+}
