@@ -8,7 +8,7 @@ Source tag shorthand (paths are relative to the repo's file tree):
 
 ## Project rules (non-negotiable)
 
-- P-01 The page background is near-black (every channel of the computed `background-color` <= 24/255; check `body` and each section), not pure `#000` on large areas and not a gradient. [project]
+- P-01 The page background is near-black (every channel of the computed `background-color` <= 24/255; check `body` and each section), not pure `#000` on large areas and not a gradient. [project] (amended by P-22, owner decision 2026-11-18)
 - P-02 Exactly one accent hue is used across the whole site; list every non-neutral color in the CSS and all of them are that one hue (tints and shades allowed). [project]
 - P-03 Neutrals (background, surfaces, text, borders) carry no second hue: no blue-purple tint, no second brand color. [project]
 - P-04 Style comes from type and grid: the site has a visible, consistent column grid and a deliberate type scale, and removing every image still leaves a page with an identifiable look. [project]
@@ -25,10 +25,13 @@ Source tag shorthand (paths are relative to the repo's file tree):
 - P-15 Every text/background pair meets WCAG AA: body text >= 4.5:1, large text (>= 24px, or >= 18.66px bold) >= 3:1; verified with computed colors, including the accent as text. [project]
 - P-16 Lighthouse Accessibility score is >= 90 on mobile emulation for every page type (home, project, about/contact). [project]
 - P-17 No serif typefaces: every font-family in the CSS resolves to a sans-serif or monospace family. [project]
-- P-18 The accent colour may fill solid flat areas (panels, bars, bands); text on the accent passes WCAG AA; still exactly one accent hue and no gradients. [project]
+- P-18 The accent colour may fill solid flat areas (panels, bars, bands); text on the accent passes WCAG AA; still exactly one accent hue and no gradients. [project] (amended by P-22, owner decision 2026-11-18)
 - P-19 Hover/focus motion is allowed via CSS transitions on :hover, :focus-visible and :focus-within only; all content is reachable without hover on touch devices; motion is removed under prefers-reduced-motion; nothing is triggered by scroll. [project]
-- P-20 Chosen design: Direction D "Pit Board", accent #FFFFFF with #0E0E0E text on accent blocks; no other hue appears in the UI (artwork excepted). [project, owner decision 2026-11-18]
-- P-21 Links and interactive/active states are distinguishable from body text without relying on colour (underline, weight or inverted block). [project]
+- P-20 Chosen design: Direction D "Pit Board", accent #FFFFFF with #0E0E0E text on accent blocks; no other hue appears in the UI (artwork excepted). [project, owner decision 2026-11-18] (amended by P-22, owner decision 2026-11-18)
+- P-21 Links and interactive/active states are distinguishable from body text without relying on colour (underline, weight or inverted block). [project] (amended by P-23, owner decision 2026-11-18)
+- P-22 All sections use the near-black background; white appears only on small elements (labels, buttons, control bars, hover panels, logo plates). [project, owner decision 2026-11-18]
+- P-23 No underlines: links and buttons are marked by a solid white box with near-black text, inverted (near-black box, white 2px border, ring) on hover and keyboard focus. [project, owner decision 2026-11-18]
+- P-24 Videos autoplay muted and loop; sound starts only from an explicit "Play with sound" control; a Pause control is always reachable; no autoplay under prefers-reduced-motion. [project, owner decision 2026-11-18]
 
 ## Typography
 
@@ -52,11 +55,11 @@ Source tag shorthand (paths are relative to the repo's file tree):
 ## Color and contrast
 
 - C-01 Neutral ramp has defined roles: background, raised surface, border, muted text, primary text, each a CSS custom property used via `var()`; no one-off hex values in components. [impeccable: colorize.md; OpenDesigner: preflight/checklist.md #2]
-- C-02 The accent is used rarely and for one job (links, the primary action, current-page marker); it does not fill large areas or decorate headings. [impeccable: colorize.md (rarity gives an accent force)] (superseded by P-18, owner decision 2026-11-18)
+- C-02 The accent is used rarely and for one job (links, the primary action, current-page marker); it does not fill large areas or decorate headings. [impeccable: colorize.md (rarity gives an accent force)] (superseded by P-18, owner decision 2026-11-18) (amended by P-22, owner decision 2026-11-18)
 - C-03 Secondary text is a solid muted color that passes 4.5:1 where it sits; it is not made with `opacity` on text. [OpenDesigner: preflight/checklist.md #60]
 - C-04 Text over any image or video is measured against the pixels behind it and meets 4.5:1 (3:1 large), or a plain solid panel sits behind it. [OpenDesigner: preflight/checklist.md #11]
 - C-05 Controls, icons and focus indicators have >= 3:1 against their background; focus rings are visible on every focusable element and themed to the accent. [impeccable: colorize.md; craft-floor.md]
-- C-06 Meaning is never carried by color alone (current page, error, selected state also differ by text, weight, underline or shape). [impeccable: colorize.md]
+- C-06 Meaning is never carried by color alone (current page, error, selected state also differ by text, weight, underline or shape). [impeccable: colorize.md] (amended by P-23, owner decision 2026-11-18)
 - C-07 Pure white `#fff` and pure black `#000` are not both used as opaque surface/text colors; pair off-white text with the near-black. [OpenDesigner: preflight/checklist.md #58]
 - C-08 Light text on near-black is off-white (not `#fff` body copy over large dark areas) so glare is controlled, and still >= 4.5:1. [project; impeccable: typeset.md]
 - C-09 Text selection (`::selection`), caret and scrollbar styling, if themed, use the single accent and neutrals; they are not left as a mismatched default color. [impeccable: craft-floor.md (browser surfaces)]
@@ -78,7 +81,7 @@ Source tag shorthand (paths are relative to the repo's file tree):
 - L-12 No hard offset block shadows (`box-shadow: 4px 4px 0`) and no shadow used where a border or spacing would do; elevation is declared once, border or shadow, not both. [impeccable: craft-floor.md]
 - L-13 No horizontal page scroll at 320px; at 320px, 200% text size and 30% longer words nothing is clipped, ellipsized or overflowing. [OpenDesigner: preflight/checklist.md #66]
 - L-14 Touch targets are >= 44x44px on touch screens; no control depends on hover to work. [impeccable: adapt.md; OpenDesigner: preflight/checklist.md #61]
-- L-15 There is one primary action per view (for example "Contact"); other actions are visibly quieter text links, and actions already in the header are not repeated as buttons. [OpenDesigner: preflight/checklist.md #36]
+- L-15 There is one primary action per view (for example "Contact"); other actions are visibly quieter text links, and actions already in the header are not repeated as buttons. [OpenDesigner: preflight/checklist.md #36] (amended by P-23, owner decision 2026-11-18)
 - L-16 Layout is checked at 320, 390, 768, 1280 and 1920px; it recomposes (reorder, reflow) rather than just shrinking. [impeccable: layout.md, adapt.md]
 - L-17 Keyboard focus order matches the visual order. [impeccable: layout.md]
 - L-18 No modal or lightbox for content that could be a normal page; if a lightbox exists it traps focus, closes on Escape and has a labelled close button. [impeccable: craft-floor.md]
@@ -95,7 +98,7 @@ Source tag shorthand (paths are relative to the repo's file tree):
 - I-07 No sparklines, rings or abstract shapes used as filler where content should be. [impeccable: craft-floor.md]
 - I-08 Icons, if any, come from one set with one stroke weight; no emoji or unicode glyphs as icons. [impeccable: craft-floor.md]
 - I-09 No SVG sketch/doodle illustrations or `feTurbulence` grain imitating pictures. [impeccable: craft-floor.md (sketchy SVG ban); project P-08]
-- I-10 Video does not autoplay with sound; autoplaying loops are muted, have a pause control if over 5 seconds, and stop when offscreen. A video poster frame is set. [impeccable: animate.md; OpenDesigner: review/references/motion.md]
+- I-10 Video does not autoplay with sound; autoplaying loops are muted, have a pause control if over 5 seconds, and stop when offscreen. A video poster frame is set. [impeccable: animate.md; OpenDesigner: review/references/motion.md] (amended by P-24, owner decision 2026-11-18)
 - I-11 No video or loop flashes more than 3 times in any second. [OpenDesigner: preflight/checklist.md #49; review/references/motion.md]
 - I-12 Corners and frames around media use one style (one bezel/border treatment), and a thumbnail shows the same crop as the page it opens. [OpenDesigner: preflight/checklist.md #46, #47]
 
@@ -110,7 +113,7 @@ Source tag shorthand (paths are relative to the repo's file tree):
 - M-07 Hover never moves the hovered element out from under the pointer (the child moves, the hit area stays), and hover effects are limited to color, underline or small opacity change. [impeccable: animate.md] (superseded by P-19, owner decision 2026-11-18)
 - M-08 A `prefers-reduced-motion: reduce` rule exists and removes spatial movement while keeping state feedback. [impeccable: animate.md; OpenDesigner: review/references/motion.md]
 - M-09 Every interactive element has distinct default, hover, focus-visible, active and disabled states; focus is never removed with `outline: none` without a replacement. [impeccable: craft-floor.md]
-- M-10 Nothing starts on its own and runs over 5 seconds without a pause control, other than muted video the visitor can stop. [OpenDesigner: review/references/motion.md (WCAG 2.2.2)]
+- M-10 Nothing starts on its own and runs over 5 seconds without a pause control, other than muted video the visitor can stop. [OpenDesigner: review/references/motion.md (WCAG 2.2.2)] (amended by P-24, owner decision 2026-11-18)
 - M-11 Page-to-page transitions, if any, are a short crossfade (< 300ms) or none. [OpenDesigner: preflight/checklist.md #46]
 - M-12 There are no loading spinners or skeletons for loads under 1 second; a slow load keeps the final layout (no shift). [OpenDesigner: review/references/motion.md; preflight/checklist.md #71]
 

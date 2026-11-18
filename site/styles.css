@@ -25,10 +25,6 @@
   --muted:#A0A0A0;
   --accent:#FFFFFF;
   --on-accent:#0E0E0E;
-  /* link underline: colour never marks a link, the underline does */
-  --ul-t:2px;--ul-t-hover:4px;--ul-o:0.25em;
-  /* inverted block used for hover, focus and active */
-  --inv-bg:var(--accent);--inv-fg:var(--on-accent);
   --s-1:4px;--s-2:8px;--s-3:12px;--s-4:16px;--s-5:24px;--s-6:32px;--s-7:48px;--s-8:64px;--s-9:96px;
   --ease:cubic-bezier(0.16,1,0.3,1);
   --font:"Saira","Saira fallback",Arial,sans-serif;
@@ -52,43 +48,42 @@ p,dd{text-wrap:pretty}
 p{max-width:65ch}
 button{font:inherit;color:inherit}
 ::selection{background:var(--accent);color:var(--on-accent)}
-.on-accent ::selection{background:var(--on-accent);color:var(--accent)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 
-h1,h2,.discord{font-family:var(--font-cond)}
+h1,h2,.discord,.name{font-family:var(--font-cond)}
 h1{font-size:clamp(2.75rem,1.6rem + 4.6vw,5.5rem);font-weight:600;font-stretch:75%;text-transform:uppercase;letter-spacing:-0.01em;line-height:0.95}
 h2{font-size:clamp(1.75rem,1.4rem + 1.5vw,2.5rem);font-weight:600;font-stretch:75%;text-transform:uppercase;letter-spacing:0;line-height:1}
-h3,.name{font-size:1.25rem;font-weight:600;font-stretch:100%;letter-spacing:0;line-height:1.25}
+h3{font-size:1.25rem;font-weight:600;font-stretch:100%;letter-spacing:0;line-height:1.25}
 .about{font-size:1.25rem;font-weight:400;letter-spacing:0;line-height:1.45}
 .about{max-width:50ch}
-.label,dt,nav a,.play-text{font-size:0.75rem;font-weight:500;font-stretch:100%;text-transform:uppercase;letter-spacing:0.08em;line-height:1.4}
+.label,dt,nav a,.vctl button,.vctl-key,.ns-link{font-size:0.75rem;font-weight:500;font-stretch:100%;text-transform:uppercase;letter-spacing:0.08em;line-height:1.4}
 .muted{color:var(--muted)}
+
+/* section title: a small white label block, never a full-width band */
+h2{display:inline-block;background:var(--accent);color:var(--on-accent);padding:var(--s-2) var(--s-3)}
 
 .wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--margin)}
 .grid{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));column-gap:var(--gut)}
-.on-accent{background:var(--accent);color:var(--on-accent);--inv-bg:var(--on-accent);--inv-fg:var(--accent)}
 
-/* links: persistent underline on every text link, on dark and on white. Image links (.art-link) have no underline and use the ring below. */
-a:not(.art-link){color:inherit;text-decoration-line:underline;text-decoration-thickness:var(--ul-t);text-decoration-color:currentColor;text-underline-offset:var(--ul-o);transition:background-color 120ms var(--ease),color 120ms var(--ease)}
-/* focus: thicker underline plus inverted block plus outline (the active state is defined at the end of the file) */
-a:not(.art-link):focus-visible{background-color:var(--inv-bg);color:var(--inv-fg);text-decoration-thickness:var(--ul-t-hover)}
-.art-link{display:block;color:inherit;text-decoration:none}
+/* links and buttons: a solid white box with near-black text. The box shape marks the link (no colour reliance).
+   Padding 6px + 2px border = 8px 12px. Hover and keyboard focus invert to a near-black box with a 2px white border; active adds an inner ring (no layout shift). */
+a:not(.art-link):not(.name):not(.skip),.copy{display:inline-flex;align-items:center;min-height:44px;padding:6px 10px;border:2px solid var(--accent);border-radius:0;background:var(--accent);color:var(--on-accent);text-decoration:none;cursor:pointer;transition:background-color 120ms var(--ease),color 120ms var(--ease)}
+a:not(.art-link):not(.name):not(.skip):focus-visible,.copy:focus-visible{background:var(--bg);color:var(--text)}
+a:not(.art-link):not(.name):not(.skip):active,.copy:active{background:var(--bg);color:var(--text);outline:2px solid var(--accent);outline-offset:-6px}
+.art-link,.name{color:inherit;text-decoration:none}
+.name{font-size:1.5rem;font-weight:600;font-stretch:75%;text-transform:uppercase;letter-spacing:0;line-height:1;display:inline-flex;align-items:center;min-height:44px;padding-inline:var(--s-2);margin-inline:calc(-1*var(--s-2))}
 
-/* focus ring: white on dark, near-black on white blocks */
+/* focus ring: white outer ring with a near-black gap on the dark page (two-tone) */
 :focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-.on-accent :focus-visible,.fields :focus-visible{outline-color:var(--on-accent)}
 
-/* two-tone inner ring for artwork links and video frames: 3px white edge plus 3px near-black band, drawn inside the clipping box.
+/* artwork links and video frames: inner two-tone ring, 3px white edge plus 3px near-black band, drawn inside the clipping box.
    One band is always at least 4.39:1 against any pixel, and the two bands are 19.3:1 against each other. */
-.art-link:focus-visible,.facade:focus-visible,.media>video:focus-visible{outline:none}
-.art-link:focus-visible::after,.art-link:active::after,.media:has(:focus-visible)::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;border:3px solid var(--accent);outline:3px solid var(--on-accent);outline-offset:-6px}
+.art-link:focus-visible{outline:none}
+.art-link:focus-visible::after,.art-link:active::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;border:3px solid var(--accent);outline:3px solid var(--on-accent);outline-offset:-6px}
 .art-link{position:relative}
-/* on white sections: outer near-black outline (19.3:1 against white), 3px gap, no inner ring */
-.on-accent .art-link:focus-visible{outline:3px solid var(--on-accent);outline-offset:3px}
-.on-accent .art-link:focus-visible::after{content:none}
-/* visible text cue inside every artwork link */
-.view-label{display:block;position:relative;z-index:1;margin-top:var(--s-2);font-size:0.75rem;font-weight:500;letter-spacing:0.01em;line-height:1.4;text-decoration-line:underline;text-decoration-thickness:var(--ul-t);text-underline-offset:var(--ul-o)}
-.poster .view-label{background:var(--bg);padding-top:var(--s-2);margin-top:0}
+/* "View full size" label: only on hover-capable fine pointers (see the media query at the end) */
+.view-label{display:none;position:absolute;left:0;bottom:0;z-index:2;background:var(--accent);color:var(--on-accent);padding:var(--s-2) var(--s-3);font-size:0.75rem;font-weight:500;letter-spacing:0.01em;line-height:1.4;text-decoration:none}
+.poster .view-label{bottom:auto;top:0}
 .op-play{--play:40px;z-index:1}
 .op-play svg{width:20px;height:20px}
 .op-vid .art{position:relative}
@@ -96,16 +91,15 @@ a:not(.art-link):focus-visible{background-color:var(--inv-bg);color:var(--inv-fg
 .logo .frame{overflow:visible}
 
 /* skip link */
-.skip{background:var(--accent);color:var(--on-accent);padding:var(--s-3) var(--s-4);min-height:44px;display:inline-flex;align-items:center}
+.skip{background:var(--accent);color:var(--on-accent);padding:var(--s-3) var(--s-4);min-height:44px;display:inline-flex;align-items:center;text-decoration:none}
 .skip:not(:focus){position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);padding:0;min-height:0}
 .skip:focus{position:absolute;left:var(--s-2);top:var(--s-2);z-index:10;outline-color:var(--on-accent);outline-offset:-6px}
 
 /* header */
-.site-header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between}
-.name{display:inline-flex;align-items:center;min-height:44px;padding-inline:var(--s-2);margin-inline:calc(-1*var(--s-2))}
-.site-header nav ul{display:flex;flex-wrap:wrap;column-gap:var(--s-3)}
-nav a{display:inline-flex;align-items:center;min-height:44px;padding-inline:var(--s-2)}
-@media (min-width:768px){.site-header .wrap{min-height:64px}.site-header nav ul{column-gap:var(--s-5)}}
+.site-header{padding-block:var(--s-2)}
+.site-header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;column-gap:var(--s-5);row-gap:var(--s-1)}
+.site-header nav ul{display:flex;flex-wrap:wrap;gap:var(--s-2)}
+@media (min-width:768px){.site-header .wrap{min-height:64px}}
 
 /* opening: role line, one video frame and one poster, all on the grid */
 .opening{padding-block:var(--s-6)}
@@ -113,6 +107,7 @@ nav a{display:inline-flex;align-items:center;min-height:44px;padding-inline:var(
 .op-text,.op-vid{grid-column:1/-1}
 .op-poster{grid-column:1/4}
 .op-text .about{margin-top:var(--s-4)}
+.op-text .about+.about{margin-top:var(--s-3)}
 .h1-role{display:block}
 .mount{background:var(--bg);padding:var(--s-2)}
 .mount .art{overflow:hidden}
@@ -129,7 +124,7 @@ nav a{display:inline-flex;align-items:center;min-height:44px;padding-inline:var(
 
 /* sections */
 .sec{margin-top:var(--sec-gap)}
-.bar{padding-block:var(--s-4);margin-bottom:var(--s-7)}
+.bar{margin-bottom:var(--s-7)}
 
 /* images */
 .art{width:100%;background:var(--surface)}
@@ -138,11 +133,11 @@ nav a{display:inline-flex;align-items:center;min-height:44px;padding-inline:var(
 .piece{position:relative}
 .frame{position:relative;overflow:hidden}
 
-/* fields: default state shows everything */
+/* fields: posters keep the white hover panel; logos and videos print them as plain text on the dark page */
 .fields{display:grid;gap:var(--s-4);background:var(--accent);color:var(--on-accent);padding:var(--s-5)}
 .fields div{display:block}
 .fields dd{margin-top:var(--s-1)}
-.logo .fields{background:transparent;padding:0;margin-top:var(--s-4)}
+.logo .fields,.vid .fields{background:transparent;color:var(--text);padding:0;margin-top:var(--s-4)}
 
 /* posters */
 .posters-grid{align-items:start;row-gap:var(--s-8)}
@@ -158,19 +153,15 @@ nav a{display:inline-flex;align-items:center;min-height:44px;padding-inline:var(
   .p-2{grid-column:7/13}
 }
 
-/* logos: one Edmonson tile beside three Eztec tiles on a 4-tile grid; on mobile the Edmonson tile is two Eztec tiles wide */
-.logos{padding-block:var(--s-7)}
-.logos h2{margin-bottom:var(--s-7)}
+/* logos: one Edmonson tile beside three Eztec tiles, four equal tiles; on mobile the Edmonson tile is as wide as one Eztec tile */
 .logos-list{display:flex;flex-direction:column;row-gap:var(--s-8)}
+.logos h2{margin-bottom:var(--s-7)}
 .set{display:grid;gap:var(--s-3)}
 .set-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-.set-1{grid-template-columns:minmax(0,1fr);width:calc((100% - 2*var(--s-3))/3*2 + var(--s-3))}
+.set-1{grid-template-columns:minmax(0,1fr);width:calc((100% - 2*var(--s-3))/3)}
 .logo .art{overflow:hidden}
-/* Edmonson: white plate inset in a near-black tile, so the plate has a visible edge and the tile matches the Eztec tiles */
-.l-edm .art{background:var(--on-accent);padding:var(--s-3)}
 .logo .fields{grid-template-columns:1fr}
 @media (min-width:768px){
-  .logos{padding-block:var(--s-8)}
   .logos-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--s-4);align-items:start}
   .l-edm{grid-column:1/2}
   .l-ezt{grid-column:2/5}
@@ -179,7 +170,7 @@ nav a{display:inline-flex;align-items:center;min-height:44px;padding-inline:var(
   .l-ezt .fields{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--s-4)}
 }
 
-/* video */
+/* video: muted looping clip, white control bar over its bottom edge */
 .video-body{display:flex;flex-direction:column;row-gap:var(--s-8)}
 .vid{display:grid;grid-template-columns:minmax(0,1fr);align-items:start}
 .vid .title-block{grid-column:1/-1}
@@ -187,20 +178,17 @@ nav a{display:inline-flex;align-items:center;min-height:44px;padding-inline:var(
 .media{position:relative;overflow:hidden;background:var(--surface)}
 .r-169{aspect-ratio:16/9}
 .r-43{aspect-ratio:4/3}
-.media>video,.media noscript video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:var(--bg)}
-.facade{position:relative;overflow:hidden;display:block;width:100%;height:100%;padding:0;border:0;background:transparent;cursor:pointer;text-align:left}
-.facade picture,.facade img{width:100%;height:100%}
-.facade img{object-fit:contain}
-.facade video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;pointer-events:none;background:var(--surface)}
-.media.is-previewing .facade video{opacity:1}
-.play-bar{position:absolute;left:0;bottom:0;width:100%;height:var(--play);background:var(--accent)}
-.play-key{position:absolute;left:0;bottom:0;width:var(--play);height:var(--play);display:grid;place-items:center;background:var(--accent);color:var(--on-accent)}
-.play-key svg{width:24px;height:24px;fill:currentColor}
-.play-text{position:absolute;left:calc(var(--play) + var(--s-4));right:var(--s-4);bottom:0;height:var(--play);display:flex;align-items:center;color:var(--on-accent)}
-.facade:active .play-bar,.facade:active .play-key{background-color:var(--on-accent)}
-.facade:active .play-text{color:var(--accent)}
-.facade:active .play-key{color:var(--accent)}
-.vid .fields{margin-top:var(--s-3);grid-template-columns:1fr}
+.media>video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:var(--bg)}
+.vctl{position:absolute;left:0;right:0;bottom:0;z-index:2;height:var(--play);display:flex;align-items:stretch;background:var(--accent);color:var(--on-accent)}
+.vctl[hidden],.media.is-sound .vctl{display:none}
+.vctl-key{flex:0 0 var(--play);display:grid;place-items:center}
+.vctl-key svg{width:24px;height:24px;fill:currentColor}
+.vctl button{min-height:44px;padding:0 var(--s-4);border:2px solid var(--accent);border-radius:0;background:var(--accent);color:var(--on-accent);cursor:pointer;transition:background-color 120ms var(--ease),color 120ms var(--ease)}
+.vctl button:focus-visible{background:var(--bg);color:var(--text);outline:3px solid var(--accent);outline-offset:-6px}
+.vctl button:active{background:var(--bg);color:var(--text);outline:2px solid var(--accent);outline-offset:-6px}
+.vctl .v-pause{margin-left:auto}
+.ns-link{position:absolute;left:0;bottom:0}
+.vid .fields{grid-template-columns:1fr}
 @media (min-width:768px){
   .vid-split .fields,.vid-a .fields{grid-template-columns:repeat(auto-fit,minmax(9rem,1fr))}
 }
@@ -208,7 +196,7 @@ nav a{display:inline-flex;align-items:center;min-height:44px;padding-inline:var(
   .vid-split{grid-template-columns:repeat(var(--cols),minmax(0,1fr));column-gap:var(--gut)}
   .vid-split .media{grid-column:1/9;grid-row:2}
   .vid-split .fields{grid-column:9/13;grid-row:2;margin-top:0;align-self:start;grid-template-columns:1fr}
-  /* V2 and V3 share three rows (title, media, fields): top edges align and both caption panels start on one line below the taller frame */
+  /* V2 and V3 share three rows (title, media, fields): top edges align and both caption blocks start on one line below the taller frame */
   .vid-row{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));grid-template-rows:auto auto auto;column-gap:var(--gut);row-gap:0;align-items:start}
   .vid-a,.vid-b{grid-row:1/4;grid-template-rows:subgrid;row-gap:0}
   .vid-a{grid-column:1/8}
@@ -217,27 +205,23 @@ nav a{display:inline-flex;align-items:center;min-height:44px;padding-inline:var(
 }
 
 /* contact */
-.contact{padding-block:var(--s-8)}
 .contact-about,.contact-links{grid-column:1/-1}
 .contact-links{margin-top:var(--s-6)}
 .discord{font-size:clamp(1.75rem,1.4rem + 1.5vw,2.5rem);font-weight:600;font-stretch:75%;letter-spacing:0;line-height:1.1;overflow-wrap:anywhere}
 .copy-row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-4);margin-top:var(--s-4)}
-.copy{min-height:44px;padding:var(--s-2) var(--s-4);background:transparent;color:var(--on-accent);border:2px solid var(--on-accent);border-radius:0;font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer}
+.copy{font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.08em}
 .copy[hidden]{display:none}
-.copy:active,.copy:focus-visible{background:var(--on-accent);color:var(--accent)}
 .copy-status:empty{display:none}
 @media (min-width:1024px){
-  .contact{padding-block:var(--s-9)}
   .contact-about{grid-column:1/7}
   .contact-links{grid-column:8/13;margin-top:0;align-self:end}
 }
 
 /* footer */
-.site-footer{padding-block:var(--s-6)}
+.site-footer{padding-block:var(--s-6);margin-top:var(--sec-gap)}
 .foot{display:flex;justify-content:space-between;align-items:center;gap:var(--s-4)}
-.to-top{display:inline-flex;align-items:center;min-height:44px;padding-inline:var(--s-2);margin-inline:calc(-1*var(--s-2))}
 
-/* hover-capable pointers: fields and play bar appear on hover or focus; everything else shows them by default */
+/* hover-capable pointers: panels, labels and the video bar appear on hover or focus; everything else shows them by default */
 @media (hover:hover) and (pointer:fine){
   .poster .fields{position:absolute;left:0;right:0;bottom:0;z-index:2;max-height:100%;overflow-y:auto;transform:translateY(calc(100% + 2px));transition:transform 160ms var(--ease)}
   .poster:hover .fields,.poster:focus-within .fields,.poster .fields:focus-within{transform:translateY(0);transition-duration:240ms}
@@ -245,23 +229,22 @@ nav a{display:inline-flex;align-items:center;min-height:44px;padding-inline:var(
   .poster:hover .art,.poster:focus-within .art{transform:scale(1.04);transition-duration:300ms}
   .logo .art img{transition:transform 160ms var(--ease)}
   .logo:hover .art img,.logo:focus-within .art img{transform:scale(1.06);transition-duration:240ms}
-  .l-edm:hover .art img,.l-edm:focus-within .art img{transform:scale(1.03)}
+
+  .view-label{display:block;opacity:0;transform:translateY(8px);transition:opacity 160ms var(--ease),transform 160ms var(--ease);pointer-events:none}
+  .poster .view-label{transform:translateY(-8px)}
+  .art-link:hover .view-label,.art-link:focus-visible .view-label{opacity:1;transform:none;transition-duration:240ms}
 
   .mount .art img{transition:transform 160ms var(--ease)}
   .op-link:hover .art img{transform:scale(1.03);transition-duration:240ms}
-  a:not(.art-link):hover{background-color:var(--inv-bg);color:var(--inv-fg);text-decoration-thickness:var(--ul-t-hover)}
-  .copy:hover{background:var(--on-accent);color:var(--accent)}
+  a:not(.art-link):not(.name):not(.skip):hover,.copy:hover{background:var(--bg);color:var(--text)}
+  .name:hover{outline:2px solid var(--accent);outline-offset:3px}
+  .vctl button:hover{background:var(--bg);color:var(--text)}
 
-  .play-bar{transform:scaleX(0);transform-origin:left;transition:transform 180ms var(--ease)}
-  .facade:hover .play-bar,.facade:focus-visible .play-bar{transform:scaleX(1);transition-duration:260ms}
-  .play-text{opacity:0;transition:opacity 120ms var(--ease)}
-  .facade:hover .play-text,.facade:focus-visible .play-text{opacity:1;transition:opacity 150ms var(--ease) 100ms}
-  .media.is-previewing .facade video{transition:opacity 120ms var(--ease)}
+  .vctl{opacity:0;transform:translateY(100%);transition:opacity 160ms var(--ease),transform 160ms var(--ease)}
+  .media:hover .vctl,.media:focus-within .vctl,.media.ctl-on .vctl{opacity:1;transform:none;transition-duration:240ms}
 }
-/* active (pressed): distinct from hover. Text links drop back to the thin underline and gain an inner outline; copy gains an inner ring; artwork shows the ring. */
-a:not(.art-link):active{background-color:var(--inv-bg);color:var(--inv-fg);text-decoration-thickness:var(--ul-t);outline:2px solid currentColor;outline-offset:-4px}
-.on-accent .copy:active{background:var(--on-accent);color:var(--accent);outline:2px solid var(--accent);outline-offset:-6px}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition:none!important;animation:none!important}
   .art,.art img{transform:none!important}
+  .vctl{opacity:1!important;transform:none!important}
 }

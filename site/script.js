@@ -1,54 +1,83 @@
-/* Video facades, hover/focus previews and copy button. No scroll or wheel listeners, no observers. */
+/* Muted looping videos with a "Play with sound" control, and the copy button. No scroll or wheel listeners, no observers. */
 (function () {
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var fine = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  var medias = document.querySelectorAll('.media');
-  Array.prototype.forEach.call(medias, function (m) {
-    var b = m.querySelector('.facade');
-    if (!b) { return; }
-    var v = m.querySelector('.facade video');
+  var boxes = [];
 
-    function start() {
-      if (!v || reduce || !fine) { return; }
+  function playQuiet(v, st) {
+    try {
+      var p = v.play();
+      if (p && p.catch) { p.catch(function () { st.m.classList.add('ctl-on'); sync(st); }); }
+    } catch (e) { st.m.classList.add('ctl-on'); }
+  }
+  function sync(st) {
+    if (st.sound) { return; }
+    st.t.textContent = st.v.paused ? 'Play' : 'Pause';
+  }
+  function resumeOthers(except) {
+    boxes.forEach(function (o) {
+      if (o !== except && !o.userPaused && !reduce) { playQuiet(o.v, o); }
+    });
+  }
+  function toLoop(st, resume) {
+    var v = st.v;
+    st.sound = false;
+    st.m.classList.remove('is-sound');
+    v.controls = false;
+    v.muted = true;
+    v.loop = true;
+    v.src = st.loopSrc;
+    if (resume && !st.userPaused && !reduce) { playQuiet(v, st); } else { try { v.pause(); } catch (e) {} }
+    sync(st);
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.media'), function (m) {
+    var v = m.querySelector('video');
+    var bar = m.querySelector('.vctl');
+    if (!v || !bar) { return; }
+    var st = { m: m, v: v, t: bar.querySelector('.v-pause-t'), userPaused: false, sound: false,
+      loopSrc: v.querySelector('source').getAttribute('src'),
+      fullSrc: v.querySelector('source').getAttribute('src').replace('-loop', '') };
+    boxes.push(st);
+    bar.hidden = false;
+
+    if (reduce) {
+      v.removeAttribute('autoplay');
+      try { v.pause(); v.load(); } catch (e) {}
+      st.userPaused = true;
+      m.classList.add('ctl-on');
+    }
+    sync(st);
+    v.addEventListener('play', function () { sync(st); });
+    v.addEventListener('pause', function () {
+      if (st.sound) {
+        if (!v.ended) { resumeOthers(st); }
+      } else { sync(st); }
+    });
+    v.addEventListener('ended', function () {
+      if (st.sound) { toLoop(st, true); resumeOthers(st); }
+    });
+
+    bar.querySelector('.v-pause').addEventListener('click', function () {
+      if (v.paused) { st.userPaused = false; playQuiet(v, st); } else { st.userPaused = true; v.pause(); }
+    });
+    bar.querySelector('.v-sound').addEventListener('click', function () {
+      boxes.forEach(function (o) {
+        if (o === st) { return; }
+        if (o.sound) { toLoop(o, false); } else { o.v.pause(); }
+      });
+      st.userPaused = false;
+      st.sound = true;
+      m.classList.add('is-sound');
+      v.muted = false;
+      v.loop = false;
+      v.controls = true;
+      v.src = st.fullSrc;
+      try { v.currentTime = 0; } catch (e) {}
       try {
         var p = v.play();
-        if (p && p.then) {
-          p.then(function () { m.classList.add('is-previewing'); }, function () {});
-        }
+        if (p && p.catch) { p.catch(function () {}); }
       } catch (e) {}
-    }
-    function stop() {
-      if (!v) { return; }
-      m.classList.remove('is-previewing');
-      try { v.pause(); v.currentTime = 0; } catch (e) {}
-    }
-    if (v) {
-      v.addEventListener('error', function () { m.classList.remove('is-previewing'); });
-      m.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { start(); } });
-      m.addEventListener('pointerleave', stop);
-      m.addEventListener('focusin', start);
-      m.addEventListener('focusout', stop);
-    }
-
-    b.addEventListener('click', function () {
-      var title = b.getAttribute('data-title') || 'Video';
-      var f = document.createElement('video');
-      f.controls = true;
-      f.autoplay = true;
-      f.playsInline = true;
-      f.setAttribute('playsinline', '');
-      f.preload = 'metadata';
-      var shown = b.querySelector('img');
-      f.setAttribute('poster', (shown && shown.currentSrc) || b.getAttribute('data-poster') || '');
-      f.setAttribute('aria-label', title);
-      var src = document.createElement('source');
-      src.src = b.getAttribute('data-src');
-      src.type = 'video/mp4';
-      f.appendChild(src);
-      stop();
-      v = null;
-      b.replaceWith(f);
-      f.focus();
+      v.focus();
     });
   });
 

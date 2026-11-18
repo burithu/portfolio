@@ -2,7 +2,7 @@
 <!--
 IMAGE NAMING SCHEME: img/<id>-<width>.<avif|webp|jpg>
   p1 480/960/1440, p2 480/960/1080, l1 256/512/1024, l5 l6 l7 256/512, v1 v2 v3 poster frames 480/960/1440.
-VIDEO FILES (self-hosted): video/v<N>.mp4 (full), video/v<N>-preview.mp4 (muted hover preview, optional, a missing file fails silently).
+VIDEO FILES (self-hosted): video/v<N>.mp4 (full, with sound, loaded only on "Play with sound"), video/v<N>-loop.mp4 (muted autoplay loop, no audio). v<N>-preview.mp4 is unused.
 -->
 <html lang="en">
 <head>
@@ -28,11 +28,10 @@ VIDEO FILES (self-hosted): video/v<N>.mp4 (full), video/v<N>-preview.mp4 (muted 
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/saira-var-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
-<noscript><style>.facade{display:none}</style></noscript>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="site-header on-accent">
+<header class="site-header">
 <div class="wrap">
 <a class="name" href="#top">burithu</a>
 <nav aria-label="Sections"><ul>
@@ -45,7 +44,7 @@ VIDEO FILES (self-hosted): video/v<N>.mp4 (full), video/v<N>-preview.mp4 (muted 
 </header>
 <main id="main">
 <span id="top"></span>
-<section class="opening on-accent" aria-labelledby="h1">
+<section class="opening" aria-labelledby="h1">
 <div class="wrap grid">
 <div class="op-text">
 <h1 id="h1"><span class="sr">burithu. </span><span class="h1-role">Graphic design and video editing</span></h1>
@@ -56,7 +55,7 @@ VIDEO FILES (self-hosted): video/v<N>.mp4 (full), video/v<N>-preview.mp4 (muted 
 </section>
 
 <section id="posters" class="sec" aria-labelledby="posters-h">
-<div class="bar on-accent"><div class="wrap"><h2 id="posters-h">Posters</h2></div></div>
+<div class="bar"><div class="wrap"><h2 id="posters-h">Posters</h2></div></div>
 <div class="wrap grid posters-grid">
 <article class="piece poster p-1" id="p1">
 <div class="title-block"><h3>Racing schedule 2026 – Champ Car</h3></div>
@@ -69,7 +68,7 @@ VIDEO FILES (self-hosted): video/v<N>.mp4 (full), video/v<N>-preview.mp4 (muted 
 </div>
 </section>
 
-<section id="logos" class="sec logos on-accent" aria-labelledby="logos-h">
+<section id="logos" class="sec logos" aria-labelledby="logos-h">
 <div class="wrap">
 <h2 id="logos-h">Logos</h2>
 <div class="logos-list">
@@ -88,29 +87,29 @@ VIDEO FILES (self-hosted): video/v<N>.mp4 (full), video/v<N>-preview.mp4 (muted 
 </section>
 
 <section id="video" class="sec" aria-labelledby="video-h">
-<div class="bar on-accent"><div class="wrap"><h2 id="video-h">Video</h2></div></div>
+<div class="bar"><div class="wrap"><h2 id="video-h">Video</h2></div></div>
 <div class="wrap video-body">
 <article class="piece vid vid-split" id="v1">
 <div class="title-block"><h3>Victory Lap 5 x Edmonson</h3></div>
-<div class="media r-169"><button type="button" class="facade" data-src="video/v1.mp4" data-poster="img/v1-960.jpg" data-title="Victory Lap 5 x Edmonson"><picture><source type="image/avif" srcset="img/v1-480.avif 480w, img/v1-960.avif 960w, img/v1-1440.avif 1440w" sizes="(min-width:1440px) 912px, (min-width:1024px) 63vw, 94vw"><source type="image/webp" srcset="img/v1-480.webp 480w, img/v1-960.webp 960w, img/v1-1440.webp 1440w" sizes="(min-width:1440px) 912px, (min-width:1024px) 63vw, 94vw"><img src="img/v1-960.jpg" srcset="img/v1-480.jpg 480w, img/v1-960.jpg 960w, img/v1-1440.jpg 1440w" sizes="(min-width:1440px) 912px, (min-width:1024px) 63vw, 94vw" width="960" height="540" alt="Open door of a green race car with number 227 and the Edmonson Motorsports logo" loading="lazy" decoding="async"></picture><video muted loop playsinline preload="none" tabindex="-1" aria-hidden="true" src="video/v1-preview.mp4"></video><span class="play-bar" aria-hidden="true"></span><span class="play-key" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M8 5v14l11-7z"/></svg></span><span class="play-text"><span class="sr">Play video: Victory Lap 5 x Edmonson</span><span class="act" aria-hidden="true">Play with sound</span></span></button><noscript><video controls preload="none" poster="img/v1-960.jpg" aria-label="Victory Lap 5 x Edmonson"><source src="video/v1.mp4" type="video/mp4"><a href="video/v1.mp4">Download the video (MP4)</a></video></noscript></div>
+<div class="media r-169"><video muted loop playsinline autoplay preload="metadata" poster="img/v1-960.jpg" aria-label="Victory Lap 5 x Edmonson, muted preview"><source src="video/v1-loop.mp4" type="video/mp4"></video><div class="vctl" role="group" aria-label="Controls: Victory Lap 5 x Edmonson" hidden><span class="vctl-key" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M8 5v14l11-7z"/></svg></span><button type="button" class="v-sound">Play with sound<span class="sr">: Victory Lap 5 x Edmonson</span></button><button type="button" class="v-pause"><span class="sr">Victory Lap 5 x Edmonson: </span><span class="v-pause-t">Pause</span></button></div><noscript><a class="ns-link" href="video/v1.mp4">Play with sound: Victory Lap 5 x Edmonson</a></noscript></div>
 <dl class="fields"><div><dt>Client</dt><dd>Edmonson Motorsports</dd></div><div><dt>Tools</dt><dd>DaVinci Resolve</dd></div></dl>
 </article>
 <div class="vid-row">
 <article class="piece vid vid-a" id="v2">
 <div class="title-block"><h3>Toph</h3></div>
-<div class="media r-169"><button type="button" class="facade" data-src="video/v2.mp4" data-poster="img/v2-960.jpg" data-title="Toph"><picture><source type="image/avif" srcset="img/v2-480.avif 480w, img/v2-960.avif 960w, img/v2-1440.avif 1440w" sizes="(min-width:1440px) 796px, (min-width:1024px) 55vw, 94vw"><source type="image/webp" srcset="img/v2-480.webp 480w, img/v2-960.webp 960w, img/v2-1440.webp 1440w" sizes="(min-width:1440px) 796px, (min-width:1024px) 55vw, 94vw"><img src="img/v2-960.jpg" srcset="img/v2-480.jpg 480w, img/v2-960.jpg 960w, img/v2-1440.jpg 1440w" sizes="(min-width:1440px) 796px, (min-width:1024px) 55vw, 94vw" width="960" height="540" alt="Armoured animated figure firing a blast of flame in a dim corridor" loading="lazy" decoding="async"></picture><video muted loop playsinline preload="none" tabindex="-1" aria-hidden="true" src="video/v2-preview.mp4"></video><span class="play-bar" aria-hidden="true"></span><span class="play-key" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M8 5v14l11-7z"/></svg></span><span class="play-text"><span class="sr">Play video: Toph</span><span class="act" aria-hidden="true">Play with sound</span></span></button><noscript><video controls preload="none" poster="img/v2-960.jpg" aria-label="Toph"><source src="video/v2.mp4" type="video/mp4"><a href="video/v2.mp4">Download the video (MP4)</a></video></noscript></div>
+<div class="media r-169"><video muted loop playsinline autoplay preload="metadata" poster="img/v2-960.jpg" aria-label="Toph, muted preview"><source src="video/v2-loop.mp4" type="video/mp4"></video><div class="vctl" role="group" aria-label="Controls: Toph" hidden><span class="vctl-key" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M8 5v14l11-7z"/></svg></span><button type="button" class="v-sound">Play with sound<span class="sr">: Toph</span></button><button type="button" class="v-pause"><span class="sr">Toph: </span><span class="v-pause-t">Pause</span></button></div><noscript><a class="ns-link" href="video/v2.mp4">Play with sound: Toph</a></noscript></div>
 <dl class="fields"><div><dt>Tools</dt><dd>DaVinci Resolve</dd></div></dl>
 </article>
 <article class="piece vid vid-b" id="v3">
 <div class="title-block"><h3>YF23 x The One That Got Away</h3></div>
-<div class="media r-43"><button type="button" class="facade" data-src="video/v3.mp4" data-poster="img/v3-960.jpg" data-title="YF23 x The One That Got Away"><picture><source type="image/avif" srcset="img/v3-480.avif 480w, img/v3-960.avif 960w, img/v3-1440.avif 1440w" sizes="(min-width:1440px) 564px, (min-width:1024px) 38vw, 94vw"><source type="image/webp" srcset="img/v3-480.webp 480w, img/v3-960.webp 960w, img/v3-1440.webp 1440w" sizes="(min-width:1440px) 564px, (min-width:1024px) 38vw, 94vw"><img src="img/v3-960.jpg" srcset="img/v3-480.jpg 480w, img/v3-960.jpg 960w, img/v3-1440.jpg 1440w" sizes="(min-width:1440px) 564px, (min-width:1024px) 38vw, 94vw" width="960" height="720" alt="Dark jet fuselage with a star roundel in front of a corrugated hangar wall" loading="lazy" decoding="async"></picture><video muted loop playsinline preload="none" tabindex="-1" aria-hidden="true" src="video/v3-preview.mp4"></video><span class="play-bar" aria-hidden="true"></span><span class="play-key" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M8 5v14l11-7z"/></svg></span><span class="play-text"><span class="sr">Play video: YF23 x The One That Got Away</span><span class="act" aria-hidden="true">Play with sound</span></span></button><noscript><video controls preload="none" poster="img/v3-960.jpg" aria-label="YF23 x The One That Got Away"><source src="video/v3.mp4" type="video/mp4"><a href="video/v3.mp4">Download the video (MP4)</a></video></noscript></div>
+<div class="media r-43"><video muted loop playsinline autoplay preload="metadata" poster="img/v3-960.jpg" aria-label="YF23 x The One That Got Away, muted preview"><source src="video/v3-loop.mp4" type="video/mp4"></video><div class="vctl" role="group" aria-label="Controls: YF23 x The One That Got Away" hidden><span class="vctl-key" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M8 5v14l11-7z"/></svg></span><button type="button" class="v-sound">Play with sound<span class="sr">: YF23 x The One That Got Away</span></button><button type="button" class="v-pause"><span class="sr">YF23 x The One That Got Away: </span><span class="v-pause-t">Pause</span></button></div><noscript><a class="ns-link" href="video/v3.mp4">Play with sound: YF23 x The One That Got Away</a></noscript></div>
 <dl class="fields"><div><dt>Tools</dt><dd>DaVinci Resolve</dd></div></dl>
 </article>
 </div>
 </div>
 </section>
 
-<section id="contact" class="sec contact on-accent" aria-labelledby="contact-h">
+<section id="contact" class="sec contact" aria-labelledby="contact-h">
 <div class="wrap grid">
 <div class="contact-about">
 <h2 id="contact-h">Contact</h2>
