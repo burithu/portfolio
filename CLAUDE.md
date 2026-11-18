@@ -62,7 +62,8 @@ Ask the owner before the first push.
   Any `position: fixed` or `sticky` hit must be checked by hand: only pinning is a violation.
 - Local server for the site shell (verified 2026-11-18): `python -m http.server 8123 --directory F:/Work/portfolio/site`.
 - Lighthouse (verified 2026-11-18; Chrome not installed, uses Edge): set CHROME_PATH to the msedge.exe path, then `npx -y lighthouse http://localhost:8123/ --form-factor=mobile --screenEmulation.mobile --only-categories=performance,accessibility,best-practices,seo --chrome-flags="--headless=new"`. Screenshots: Playwright with channel msedge.
-- Deploy: push to main triggers .github/workflows/pages.yml. Untested (repo not created yet).
+- Deploy (verified 2026-11-18): push to main triggers .github/workflows/pages.yml (job ~23 s). `gh run list --repo burithu/burithu.github.io --limit 3`; `gh run watch <id> --repo burithu/burithu.github.io --exit-status`. Pages enabled with `gh api -X POST repos/burithu/burithu.github.io/pages -f build_type=workflow`.
+- Live checks (verified 2026-11-18): `curl -s -o /dev/null -w "%{http_code}" https://burithu.github.io/`; `curl -sI https://burithu.github.io/og.png`; `curl -s https://burithu.github.io/ | grep -iE 'og:|twitter:card'`; og image size `ffprobe -v error -show_entries stream=width,height -of csv=p=0 <file>`; Lighthouse as above with the live URL (3 runs scored 100/100/100/100).
 
 ## Done when
 - Live URL returns 200.

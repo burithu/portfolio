@@ -1,4 +1,10 @@
-# portfolio handoff archive (newest first; not read at session start)
+# portfolio handoff archive
+
+## 2026-11-18 (moved at first deploy)
+- Resume items finished: T-16 fix confirmed (docs/review-3.md pass 4); first commit; Pages source set to Actions; owner approved first push ("push everything").
+- Recent changes moved: media sizes (site/img 3,232,285 B; site/video 18,418,709 B; og.png 151,761 B); 7 pieces: Racing schedule 2026 - Champ Car; Champ Car race hype post; Edmonson Motorsports logo; Eztec Games logo; Victory Lap 5 x Edmonson; Toph; YF23 x The One That Got Away. Masters in source/ SHA-256 verified (docs/media-manifest.md).
+- Superseded risks: Pages source not set (fixed via API); T-16 open (closed).
+
 
 ## 2026-11-18 (moved at build/review update)
 - Old Resume: owner answers 13 curation questions; copy exports to source/, convert images, make previews; Opus review; Pages source; push approval.
