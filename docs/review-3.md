@@ -1,3 +1,5 @@
+Reviewed before the move to /portfolio/; URLs in this report refer to the earlier root address.
+
 # Review 3: third pass, narrow scope
 
 Reviewer: independent (did not build the site). Date: 2026-11-18. I re-rendered and re-measured everything myself. Method: `python -m http.server 8134`, Edge via Playwright 1.49.1 (channel msedge), Lighthouse 13.6.0 with CHROME_PATH set to Edge. Screenshots are in `.shots/review-3/`, and every image cited here was viewed. Scripts and raw output are in the scratchpad `review-3/` folder: shots.js, measure.js → measure.json, states3.js, click3.js, lh.json. The server is stopped. No file in `site/` was edited.

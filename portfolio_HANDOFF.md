@@ -2,17 +2,17 @@
 
 Purpose: static portfolio of the owner's graphic design and video editing work on GitHub Pages.
 Updated: 2026-11-18. Branch: main. Last deployed content commit: b8a43bb.
-Status: Live at https://burithu.github.io/ (first push 2026-11-18, commit b8a43bb). Owner approved the first push ("push everything").
+Status: Live at https://burithu.github.io/portfolio/ (first push 2026-11-18 at root, commit b8a43bb; moved to /portfolio/ the same day). Owner approved the first push ("push everything"). Repo renamed by owner to burithu/portfolio; https://burithu.github.io/ no longer serves the site.
 
 ## Resume here
-1. Owner: paste https://burithu.github.io/ into LinkedIn Post Inspector and confirm the preview (OG tags verified live, see below).
+1. Owner: paste https://burithu.github.io/portfolio/ into LinkedIn Post Inspector and confirm the preview (OG tags verified live, see below).
 2. Owner: run the 5-second test with a stranger (can they say what burithu does?).
 3. Optional: change tidied piece titles; add a showreel later (docs/showreel-proposal.md).
 4. Edit site/, commit with `git commit -F <file>`, push to main; pages.yml redeploys (~25 s).
 
 
 ## Goal & scope
-Show the work only, no stats. Shared as a link. Repo burithu/burithu.github.io. Out of scope: scroll effects, backend, invented content.
+Show the work only, no stats. Shared as a link. Repo burithu/portfolio. Out of scope: scroll effects, backend, invented content.
 
 ## Current status
 - [x] Phases 0-2, reviews 1-3. Final reviewer statement (docs/review-3.md, pass 4): "No violations of docs/design-rules.md found".
@@ -21,6 +21,7 @@ Show the work only, no stats. Shared as a link. Repo burithu/burithu.github.io. 
 - Showreel: none for now.
 
 ## Recent changes (this session, 2026-11-18)
+- Move to /portfolio/ base path (owner decision): site/index.html canonical/og:url/og:image/twitter:image now /portfolio/; site/404.html uses absolute /portfolio/ paths (404 is served at any depth). Live-check numbers below were measured at the old root address; re-run results in the next entry.
 - b8a43bb: first commit, 127 files, 22,368,224 B (largest: three ~5.8 MB MP4s). Pushed; workflow run 44288061511 success in 23 s job.
 - Live checks: / 200; /styles.css 200 text/css; /og.png 200 image/png (1200x630 via ffprobe); /img/p1-960.avif 200 image/avif; /video/v1.mp4 200 video/mp4; nonsense path 404 with custom 404 body.
 - Live OG tags present (title, description, type, url, image absolute https, 1200/630, alt, twitter:card summary_large_image).
@@ -45,7 +46,7 @@ Show the work only, no stats. Shared as a link. Repo burithu/burithu.github.io. 
 
 ## How to run
 - Preview: `python -m http.server 8123 --directory F:/Work/portfolio/site`. Live checks, Lighthouse, scroll grep: CLAUDE.md Commands.
-- Deploy: push to main triggers .github/workflows/pages.yml (verified). Watch: `gh run list --repo burithu/burithu.github.io --limit 3`.
+- Deploy: push to main triggers .github/workflows/pages.yml (verified). Watch: `gh run list --repo burithu/portfolio --limit 3`.
 
 ## Known issues & risks
 - Repo is PUBLIC; V2/V3 use third-party footage and commercial music, now exposed.
@@ -61,4 +62,4 @@ Show the work only, no stats. Shared as a link. Repo burithu/burithu.github.io. 
 - Plan first, act on command. Commit messages via `git commit -F <file>`. Ask before deleting asset files.
 
 ## Session log
-- 2026-11-18: Phases 0-2 done (D + white), 3 Opus reviews, owner approved push, first deploy b8a43bb live, all live checks pass. Earlier: portfolio_HANDOFF_archive.md.
+- 2026-11-18 (late): repo renamed to burithu/portfolio, site moved to /portfolio/. Earlier: Phases 0-2 done (D + white), 3 Opus reviews, owner approved push, first deploy b8a43bb live, all live checks pass. Earlier: portfolio_HANDOFF_archive.md.
