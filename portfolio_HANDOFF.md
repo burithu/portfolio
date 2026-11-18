@@ -1,65 +1,64 @@
 # portfolio handoff
 
 Purpose: static portfolio of the owner's graphic design and video editing work on GitHub Pages.
-Updated: 2026-11-18. Branch: main. Last deployed content commit: b8a43bb.
-Status: Live at https://burithu.github.io/portfolio/ (first push 2026-11-18 at root, commit b8a43bb; moved to /portfolio/ the same day). Owner approved the first push ("push everything"). Repo renamed by owner to burithu/portfolio; https://burithu.github.io/ no longer serves the site.
+Updated: 2026-11-18. Branch: main. Latest commit: 62138ae "All-black restyle: boxed links, hover labels, muted looping videos" (pushed; Pages run succeeded).
+Status: Live at https://burithu.github.io/portfolio/ (200; references video/v1-loop.mp4, 200). Repo burithu/portfolio; https://burithu.github.io/ returns 404.
 
 ## Resume here
-1. Owner: paste https://burithu.github.io/portfolio/ into LinkedIn Post Inspector and confirm the preview (OG tags verified live, see below).
-2. Owner: run the 5-second test with a stranger (can they say what burithu does?).
-3. Optional: change tidied piece titles; add a showreel later (docs/showreel-proposal.md).
-4. Edit site/, commit with `git commit -F <file>`, push to main; pages.yml redeploys (~25 s).
-
+1. Owner: LinkedIn Post Inspector on https://burithu.github.io/portfolio/; 5-second test with a stranger.
+2. Restyle NOT fully verified (see Known issues). Optional: Lighthouse on live URL, Opus review of restyle, keyboard/Tab, reduced-motion, contrast, hover screenshots.
+3. Ask owner before deleting unused site/video/v1-preview.mp4, v2-preview.mp4, v3-preview.mp4.
+4. Optional later: retitle pieces; showreel (docs/showreel-proposal.md).
+5. Edit site/, commit with `git commit -F <file>`, push to main (~25 s deploy). Subagents prepare changes only; main session commits and pushes (a subagent's commit+push was denied by permissions).
 
 ## Goal & scope
-Show the work only, no stats. Shared as a link. Repo burithu/portfolio. Out of scope: scroll effects, backend, invented content.
+Show the work only, no stats. Shared as a link. Out of scope: scroll effects, backend, invented content.
 
 ## Current status
-- [x] Phases 0-2, reviews 1-3. Final reviewer statement (docs/review-3.md, pass 4): "No violations of docs/design-rules.md found".
-- [x] Pages source = GitHub Actions (set via API). [x] First push, deploy success. [x] Live checks (below).
-- [ ] LinkedIn Post Inspector (owner). [ ] 5-second test (owner).
-- Showreel: none for now.
+- [x] Phases 0-2, reviews 1-3 (docs/review-3.md "no violations" applies to the OLD white-section design only).
+- [x] Pages via GitHub Actions; deployed; all-black restyle live (62138ae).
+- [ ] LinkedIn Post Inspector (owner). [ ] 5-second test (owner). Showreel: none.
 
 ## Recent changes (this session, 2026-11-18)
-- Move to /portfolio/ base path (owner decision): site/index.html canonical/og:url/og:image/twitter:image now /portfolio/; site/404.html uses absolute /portfolio/ paths (404 is served at any depth). Live-check numbers below were measured at the old root address; re-run results in the next entry.
-- b8a43bb: first commit, 127 files, 22,368,224 B (largest: three ~5.8 MB MP4s). Pushed; workflow run 44288061511 success in 23 s job.
-- Live checks: / 200; /styles.css 200 text/css; /og.png 200 image/png (1200x630 via ffprobe); /img/p1-960.avif 200 image/avif; /video/v1.mp4 200 video/mp4; nonsense path 404 with custom 404 body.
-- Live OG tags present (title, description, type, url, image absolute https, 1200/630, alt, twitter:card summary_large_image).
-- Scroll-rule grep on site/: no matches.
-- Lighthouse mobile live, 3 runs: 100/100/100/100 each (median 100 all four); LCP 1.4-1.6 s, TBT 0-10 ms, CLS 0; color-contrast 1. Audits <1 (insights): cache 217 KiB, image-delivery 70 KiB, render-blocking 0.5, network-dependency-tree.
-- Playwright msedge 390x844 and 1440x900: all requests from burithu.github.io, 0 failed, 0 console errors, Saira loaded (.shots/live-*.png).
+- 62138ae restyle, pushed at owner's request. Page #0E0E0E; white only on small elements (nav squares, labels, buttons, video bar, poster Client/Tools hover panel, Edmonson logo plate). No underlines; links/buttons are white boxes inverting on hover/focus; nav = four white boxes, "burithu" plain wordmark. "View full size" labels on hover/focus only (posters top-left, logos bottom-left), absent on touch.
+- Videos: three autoplay muted loops from load, site/video/v<N>-loop.mp4 (1.89/1.98/2.00 MB, full length, 640 px, no audio). White bar "Play with sound"/"Pause" on hover/focus (always visible on touch, reduced motion, autoplay blocked); "Play with sound" loads full video/v<N>.mp4 and pauses the other two.
+- docs/design-rules.md: P-22..P-24 added; P-01, P-18, P-20, P-21, C-02, C-06, L-15, I-10, M-10 marked amended.
+- Local checks before push (owner asked minimal testing): no console errors/failed requests at 1440 and 390; no horizontal overflow; loops muted; sound switch works; full videos not fetched before interaction; banned-pattern grep empty; underline count 0; Lighthouse mobile (one local run) 94/100/100/100, LCP 3.2 s, CLS 0, ~6.2 MB.
+- Earlier today: /portfolio/ base path, repo rename, first deploy b8a43bb (details in archive).
 
 ## Key decisions
-- Owner 2026-11-18: display name "burithu"; one shared role line "Graphic design and video editing"; captions = title, client (where any), tools; no per-piece role or brief.
-- Tools: Adobe Photoshop for posters and logos; DaVinci Resolve for videos.
-- All curated pieces approved, but only Edmonson logo L1 shown; L2-L4 dropped. No dates in site text (title "Racing schedule 2026 – Champ Car" stays).
-- No YouTube: videos self-hosted MP4 with click-to-play facade. Contact is "Discord: burithu" only (no email, no LinkedIn). No showreel.
-- Direction D "Pit Board" (docs/demo-directions-r2.md), font Saira, WHITE accent #FFFFFF, text on accent #0E0E0E (P-20). Page text #EEEEEE, so links/active states use underline, weight or inverted block (P-21).
-- No serif (P-17). Accent as flat blocks (P-18). CSS-only hover/focus motion, never tied to scroll, with reduced-motion and touch fallbacks (P-19).
-- Native scrolling only: no scroll/wheel listeners, libraries, snap, parallax, pinning. Dark near-black theme, one accent, no effects.
-- Static HTML/CSS in site/; deploy via GitHub Actions (path: site). pages.yml versions verified 2026-11-18: checkout v7, configure-pages v6, upload-pages-artifact v5, deploy-pages v5.
-- Images AVIF/WebP with srcset. Client name "Edmonson Motorsports". Content never invented. Strongest first.
-- Source folders read-only; masters copied to source/. Main session manages only; Sonnet builds, Opus directs and reviews.
+- Display name "burithu"; role line "Graphic design and video editing"; captions = title, client, tools. Contact "Discord: burithu" only. No dates in site text.
+- Tools: Photoshop (posters, logos); DaVinci Resolve (videos). Only Edmonson logo L1 shown. Client "Edmonson Motorsports".
+- Direction D "Pit Board", font Saira, no serif (P-17). Restyle 2026-11-18: all-black, white on small elements only, no underlines (P-22..P-24 supersede P-21 link marking).
+- Videos self-hosted MP4, muted autoplay loops plus sound on demand; no YouTube. No showreel.
+- Native scrolling only; CSS-only hover/focus motion with reduced-motion and touch fallbacks (P-19).
+- Static HTML/CSS in site/; GitHub Actions deploy (checkout v7, configure-pages v6, upload-pages-artifact v5, deploy-pages v5). AVIF/WebP srcset. Content never invented.
+- Main session manages only; Sonnet builds, Opus directs and reviews.
 
 ## Architecture map
-- site/ deployed site. source/ masters (gitignored). docs/ design-rules.md, curation.md, media-manifest.md, review-1..3.md, demo-directions*.md, d-accent-options.md, showreel-proposal.md (not used). demos/ a,b,c,e,f and d-accents = rejected references kept on disk; demos/d chosen. .shots/ screenshots (gitignored). .github/workflows/pages.yml. CLAUDE.md rules.
+- site/ deployed. source/ masters (gitignored). docs/ design-rules.md, curation.md, media-manifest.md, review-1..3.md, demo-directions*.md, showreel-proposal.md. demos/ rejected references (d chosen). .shots/ (gitignored). .github/workflows/pages.yml. CLAUDE.md.
 
 ## How to run
 - Preview: `python -m http.server 8123 --directory F:/Work/portfolio/site`. Live checks, Lighthouse, scroll grep: CLAUDE.md Commands.
-- Deploy: push to main triggers .github/workflows/pages.yml (verified). Watch: `gh run list --repo burithu/portfolio --limit 3`.
+- Deploy: push to main; `gh run list --repo burithu/portfolio --limit 3`.
 
 ## Known issues & risks
-- Repo is PUBLIC; V2/V3 use third-party footage and commercial music, now exposed.
-- Docs contain local paths (3 lines in docs/curation.md, docs/showreel-proposal.md) and placeholder name@example.com in demos/docs; no real email.
-- Untested: fallback fonts on macOS/iOS/Android; real touch devices; screen reader.
-- Lighthouse insights (cache TTL on GitHub Pages is fixed at 10 min; image delivery) are not fixable cheaply.
+- Restyle not done: independent Opus review, live Lighthouse, contrast sweep, keyboard/Tab pass, reduced-motion pass, hover-state screenshots.
+- Unused files in repo: site/video/v{1,2,3}-preview.mp4.
+- Repo PUBLIC; V2/V3 use third-party footage and commercial music.
+- Docs hold local paths and placeholder name@example.com.
+- Untested: macOS/iOS/Android fonts, real touch devices, screen reader.
+- Scratch left at %TEMP%\restyle-serve and \restyle-work (test copies; deletion was denied by permissions; owner may delete). Test server on port 8140 stopped.
 
 ## Open questions
-- Owner may still change the tidied titles.
-- Opus-flagged rule ambiguities: L-09 vs I-05; P-06 threshold; W-06; L-15; P-01 (see docs/review-3.md).
+- Owner may change tidied titles. Delete unused preview MP4s?
+- Opus rule ambiguities: L-09 vs I-05; P-06; W-06; L-15; P-01 (docs/review-3.md).
 
 ## User preferences & conventions
-- Plan first, act on command. Commit messages via `git commit -F <file>`. Ask before deleting asset files.
+- Plan first, act on command. Commit via `git commit -F <file>`. Ask before deleting asset files. Minimal testing when owner says so.
 
 ## Session log
-- 2026-11-18 (late): repo renamed to burithu/portfolio, site moved to /portfolio/. Earlier: Phases 0-2 done (D + white), 3 Opus reviews, owner approved push, first deploy b8a43bb live, all live checks pass. Earlier: portfolio_HANDOFF_archive.md.
+- 2026-11-18: Phases 0-2, 3 Opus reviews, first deploy b8a43bb, repo rename, /portfolio/ move, all-black restyle 62138ae live. Older: portfolio_HANDOFF_archive.md.
+
+## Keeping this file current
+Under 8,192 bytes (`wc -c`); Resume max 6 items; Recent changes = this session; session log last 10 lines; older detail to portfolio_HANDOFF_archive.md (newest on top).

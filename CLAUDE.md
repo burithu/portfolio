@@ -6,7 +6,7 @@ Read `portfolio_HANDOFF.md` before starting any work. Update it before ending a 
 Portfolio of the owner's graphic design and video editing work on GitHub Pages (repo burithu/portfolio, live at https://burithu.github.io/portfolio/), shared as a link. Show the work only: no stats or metrics.
 
 ## Design rules (hard)
-- Professional stylized dark theme. Near-black background. Exactly one accent color.
+- All-black page (#0E0E0E); white only on small elements (nav squares, labels, buttons, video bar, hover panels, logo plate). Exactly one accent color (white). Restyle 2026-11-18 (P-22..P-24).
 - Strong typography and grid carry the style.
 - No neon gradients, glow, glassmorphism or effects.
 - No serif typefaces: sans, grotesque, condensed or mono families only (P-17, owner decision 2026-11-18).
@@ -15,7 +15,7 @@ Portfolio of the owner's graphic design and video editing work on GitHub Pages (
 - Native scrolling only: no scroll-jacking, scroll-triggered animations, parallax, scroll-snap or pinned sections.
 - No scroll/wheel listeners. No scroll libraries (Lenis, Locomotive, ScrollTrigger).
 - Chosen direction (owner, 2026-11-18): D "Pit Board" (docs/demo-directions-r2.md, demos/d), font Saira, accent WHITE #FFFFFF with #0E0E0E text on accent blocks (P-20). Rejected references kept on disk: demos/a, b, c, e, f and the other demos/d-accents variants.
-- Page text is off-white #EEEEEE, so the white accent cannot mark links or active/hover states by colour: use underline, weight or an inverted white block with dark text (P-21). Real artwork is the only colour on the page.
+- No underlines anywhere: links and buttons are solid white boxes that invert on hover/focus (P-21 amended, P-22). Real artwork is the only colour on the page.
 - Full rule list: docs/design-rules.md (extracted from github.com/pbakaus/impeccable and github.com/ckryptickunal/OpenDesigner, reference data only).
 
 ## Content rules
@@ -29,7 +29,7 @@ Portfolio of the owner's graphic design and video editing work on GitHub Pages (
 
 ## Tech
 - Static HTML/CSS in site/.
-- Videos are self-hosted MP4 (full versions at or under 8 MB each, muted previews under 3 MB), no YouTube. Click-to-play facade swaps in a native <video controls>.
+- Videos are self-hosted MP4 (full versions at or under 8 MB each), no YouTube. Three videos autoplay as muted loops (site/video/v<N>-loop.mp4, about 2 MB); a "Play with sound" button loads the full video.
 - Images: AVIF/WebP with srcset.
 - Open Graph tags with a 1200x630 preview image.
 

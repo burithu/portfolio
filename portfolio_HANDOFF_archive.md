@@ -1,5 +1,11 @@
 # portfolio handoff archive
 
+
+## 2026-11-18 (moved at restyle update)
+- b8a43bb first commit: 127 files, 22,368,224 B; workflow run 44288061511 success (23 s).
+- Old root-address live checks: 200s for /, styles.css, og.png (1200x630), img/p1-960.avif, video/v1.mp4; custom 404 works; OG tags present; Lighthouse mobile 3 runs 100/100/100/100, LCP 1.4-1.6 s (old white-section design); Playwright 390/1440 0 failed, 0 console errors.
+- Superseded decisions: accent WHITE with underline/weight/inverted-block link marking (P-21); click-to-play video facade; page text #EEEEEE.
+- /portfolio/ move: canonical/og:url/og:image/twitter:image and site/404.html use /portfolio/ paths.
 ## 2026-11-18 (moved at first deploy)
 - Resume items finished: T-16 fix confirmed (docs/review-3.md pass 4); first commit; Pages source set to Actions; owner approved first push ("push everything").
 - Recent changes moved: media sizes (site/img 3,232,285 B; site/video 18,418,709 B; og.png 151,761 B); 7 pieces: Racing schedule 2026 - Champ Car; Champ Car race hype post; Edmonson Motorsports logo; Eztec Games logo; Victory Lap 5 x Edmonson; Toph; YF23 x The One That Got Away. Masters in source/ SHA-256 verified (docs/media-manifest.md).
