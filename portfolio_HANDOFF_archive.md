@@ -1,5 +1,9 @@
 # portfolio handoff archive
 
+## 2026-11-18 (moved at click-to-play fix)
+- 62138ae restyle details: page #0E0E0E; white only on small elements; no underlines; links are white boxes inverting on hover/focus; "View full size" labels hover/focus only. Local checks: no console errors at 1440/390, no overflow, loops muted, Lighthouse mobile local run 94/100/100/100, LCP 3.2 s, CLS 0.
+- docs/design-rules.md: P-22..P-24 added; P-01, P-18, P-20, P-21, C-02, C-06, L-15, I-10, M-10 amended.
+- Old Resume items: restyle verification list (contrast, Tab, reduced-motion, hover shots) folded into Known issues.
 
 ## 2026-11-18 (moved at restyle update)
 - b8a43bb first commit: 127 files, 22,368,224 B; workflow run 44288061511 success (23 s).
