@@ -23,6 +23,7 @@
     st.sound = false;
     st.m.classList.remove('is-sound');
     v.controls = false;
+    if (st.btn) { st.btn(); }
     v.muted = true;
     v.loop = true;
     v.src = st.loopSrc;
@@ -39,6 +40,20 @@
       fullSrc: v.querySelector('source').getAttribute('src').replace('-loop', '') };
     boxes.push(st);
     bar.hidden = false;
+    var label = 'Play with sound: ' + bar.querySelector('.v-sound .sr').textContent.replace(/^:\s*/, '');
+    var oldLabel = v.getAttribute('aria-label');
+    function btn() {
+      v.setAttribute('role', 'button');
+      v.setAttribute('tabindex', '0');
+      v.setAttribute('aria-label', label);
+    }
+    function unbtn() {
+      v.removeAttribute('role');
+      v.removeAttribute('tabindex');
+      if (oldLabel) { v.setAttribute('aria-label', oldLabel); }
+    }
+    st.btn = btn;
+    btn();
 
     if (reduce) {
       v.removeAttribute('autoplay');
@@ -60,7 +75,7 @@
     bar.querySelector('.v-pause').addEventListener('click', function () {
       if (v.paused) { st.userPaused = false; playQuiet(v, st); } else { st.userPaused = true; v.pause(); }
     });
-    bar.querySelector('.v-sound').addEventListener('click', function () {
+    function startSound() {
       boxes.forEach(function (o) {
         if (o === st) { return; }
         if (o.sound) { toLoop(o, false); } else { o.v.pause(); }
@@ -68,6 +83,7 @@
       st.userPaused = false;
       st.sound = true;
       m.classList.add('is-sound');
+      unbtn();
       v.muted = false;
       v.loop = false;
       v.controls = true;
@@ -78,6 +94,16 @@
         if (p && p.catch) { p.catch(function () {}); }
       } catch (e) {}
       v.focus();
+    }
+    bar.querySelector('.v-sound').addEventListener('click', startSound);
+    v.addEventListener('click', function (e) {
+      if (st.sound) { return; }
+      e.preventDefault();
+      startSound();
+    });
+    v.addEventListener('keydown', function (e) {
+      if (st.sound || e.target !== v) { return; }
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); startSound(); }
     });
   });
 
