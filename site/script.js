@@ -75,6 +75,10 @@
     bar.querySelector('.v-pause').addEventListener('click', function () {
       if (v.paused) { st.userPaused = false; playQuiet(v, st); } else { st.userPaused = true; v.pause(); }
     });
+    function failSound() {
+      v.controls = true;
+      try { v.pause(); v.currentTime = 0; } catch (e) {}
+    }
     function startSound() {
       boxes.forEach(function (o) {
         if (o === st) { return; }
@@ -91,11 +95,14 @@
       try { v.currentTime = 0; } catch (e) {}
       try {
         var p = v.play();
-        if (p && p.catch) { p.catch(function () {}); }
-      } catch (e) {}
+        if (p && p.catch) { p.catch(failSound); }
+      } catch (e) { failSound(); }
       v.focus();
     }
-    bar.querySelector('.v-sound').addEventListener('click', startSound);
+    bar.addEventListener('click', function (e) {
+      if (e.target.closest && e.target.closest('.v-pause')) { return; }
+      startSound();
+    });
     v.addEventListener('click', function (e) {
       if (st.sound) { return; }
       e.preventDefault();
